@@ -1,14 +1,17 @@
-import time
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 def f(x) :
+    """
+    funzione di cui trovare lo zero
+    """
     return 5.0+4.0*x-np.exp(x)
 
-a=0.0
-b=4.0
-t=1.0e-15
+a = 0.0 #estemo sinistro dell'intervallo
+b = 4.0 #estremo destro dell'intervallo
+t = 1.0e-15 #tolleranza
+
 x=np.linspace(a, b, 1000)
 #plot per vedere come scegliere gli estremi
 plt.figure(1)
@@ -18,24 +21,30 @@ plt.show()
 
 ##metodo bisezione
 start_time=time.time()
-fa=f(a)
-fb=f(b)
+fa = f(a)
+fb = f(b)
 if fa*fb>0:
     print("protrebbero esserci più soluzioni" , fa , fb)
+"""
+Potrebbero esserci più zeri anche se la condizione non fosse verificata
+Ma se la condizione è verificata allora di certo ci sono piu' soluzioni
+non e' un se e solo se
+"""
 
-iter=1
-while (b-a)>t:
-    c=(a+b)/2.0
-    fc=f(c)
-    if fc*fa>0:
-        a=c
+iter = 1
+#fai finche' l'intervallo e' piu' grande della tolleranza
+while (b-a) > t:
+    c = (a+b)/2.0 #punto medio
+    fc = f(c)
+    #se hanno lo stesso segno allora c è piu' vicino allo zero che a
+    if fc*fa > 0:
+        a = c
+    #altrimenti e' b che è piu' lontano
     else:
-        b=c
-    iter+=1
+        b = c
+    iter += 1
 
-k=(time.time() - start_time)
-print(iter , " iterazioni necessarie, che in termini di tempo sono:")
-print("--- %s seconds ---" %k)
+print(iter , " iterazioni necessarie:")
 print("x0 = " ,c)
 print("accuracy = " , '{:.2e}' .format(b-a))
 print("f (x0)=" ,f(c))
