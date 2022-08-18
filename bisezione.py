@@ -20,7 +20,6 @@ plt.grid()
 plt.show()
 
 ##metodo bisezione
-start_time=time.time()
 fa = f(a)
 fb = f(b)
 if fa*fb>0:
@@ -49,3 +48,31 @@ print("x0 = " ,c)
 print("accuracy = " , '{:.2e}' .format(b-a))
 print("f (x0)=" ,f(c))
 
+##Costuzione metodo
+
+a = 0.0 #estemo sinistro dell'intervallo
+b = 4.0 #estremo destro dell'intervallo
+t = 1.0e-15 #tolleranza
+
+plt.figure(2)
+plt.title('Costuzione metodo di bisezione')
+plt.plot(x, f(x), 'b')
+plt.plot([a, b],[f(a), f(b)], linestyle='--', c='r')
+plt.plot(x, x*0, 'k')
+
+iter = 1
+#fai finche' l'intervallo e' piu' grande della tolleranza
+while (b-a) > t:
+    c = (a+b)/2.0 #punto medio
+    fc = f(c)
+    #se hanno lo stesso segno allora c è piu' vicino allo zero che a
+    if fc*fa > 0:
+        a = c
+    #altrimenti e' b che è piu' lontano
+    else:
+        b = c
+    iter += 1
+    plt.plot([a, b],[f(a), f(b)], linestyle='--', c='r')
+
+plt.grid()
+plt.show()
