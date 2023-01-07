@@ -17,13 +17,13 @@ C=========================================================================
       
       do i = 1, N
           !creo matrice sparsa
-          a(i, i) = cos(i*1.0)
-          a(i, (i-1)+1) = sin(i*1.0)
-          a((i-1)+1, i) = sin(2.6*i)+ cos(5.0*i)
-          a(i, (i-90)+90) = 2*sin(i*1.0)+ cos(2.0*i)
-          a((i-150)+150, i) = sin(9.6*i)+3.1* cos(5.0*i)
+          a(i, i) = dcos(i*1.d0)
+          a(i, (i-1)+1) = dsin(i*1.d0)
+          a((i-1)+1, i) = dsin(2.6d0*i)+ dcos(5.d0*i)
+          a(i, (i-90)+90) = 2*dsin(i*1.d0)+ dcos(2.d0*i)
+          a((i-150)+150, i) = dsin(9.6d0*i)+3.1* dcos(5.d0*i)
 
-          x(i) = cos(5.0*i)*cos(i*1.0)	!soluzione del sistema
+          x(i) = dcos(5.d0*i)*dcos(i*1.d0)	!soluzione del sistema
 
       enddo
       
@@ -44,10 +44,10 @@ C========================================================================
       allocate(d1(N), d2(N), d3(N), x1(N), b1(N), y1(N))
       
       do i = 1, N
-         d1(i) = cos(1.0*i)			!diagonale
-         d2(i) = sin(2.0*i)+ 2.4*cos(3.4*i)	!diagonale superiore
-         d3(i) = 0.5*sin(3.0*i) + 2*sin(0.5*i)	!diagonale inferiore
-         x1(i) = cos(5.0*i)*cos(i*1.0)		!soluzione del sistema
+         d1(i) = dcos(1.d0*i)			!diagonale
+         d2(i) = dsin(2.d0*i)+ 2.4*cos(3.4*i)	!diagonale superiore
+         d3(i) = 0.5*dsin(3.d0*i) + 2*sin(5.d-1*i)	!diagonale inferiore
+         x1(i) = dcos(5.d0*i)*cos(i*1.d0)		!soluzione del sistema
       enddo
       
       !termine noto creato a posteriori
