@@ -1,7 +1,7 @@
 import sympy as sp
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import fsolve
+from scipy.optimize import fsolve, root
 
 ## risoluzione "manuale"
 x = sp.Symbol('x')
@@ -25,7 +25,7 @@ iter = 0
 xs = np.array([x0])
 ys = np.array([y0])
 
-while abs(f1.subs(x, x0).subs(y, y0) - f2.subs(x, x0).subs(y, y0)) > tau:
+while (abs(f1.subs(x, x0).subs(y, y0))>tau and abs(f2.subs(x, x0).subs(y, y0)) > tau):
     #calcolo jacobiano
     a11 = f1x.subs(x, x0).subs(y, y0)
     a12 = f2x.subs(x, x0).subs(y, y0)
@@ -53,7 +53,8 @@ while abs(f1.subs(x, x0).subs(y, y0) - f2.subs(x, x0).subs(y, y0)) > tau:
 
     iter += 1
 
-print(f"x_0: {xs[-1]} e y_0: {ys[-1]} raggiunti in {iter} iterazioni")
+print(f"soluzione con NR : x_0 = {xs[-1]} {ys[-1]}")
+print(f"raggiunti in {iter} iterazioni")
 
 t = np.linspace(0, 2*np.pi, 1000)
 z = np.linspace(-0.8, 1.5, 1000)
@@ -76,4 +77,16 @@ def sistema(V):
 
 start = (0.2, 0.0)
 sol = fsolve(sistema , start, xtol=1e-10)
-print("soluzione con fsolve:", sol)
+print("soluzione con fsolve:   ", *sol)
+
+##risoluzione con root di scipy
+
+def sistema(V):
+    x1, x2 = V
+    r1 = x1**2 + x2**2 - 1
+    r2 = x2 - x1**2 + x1/2
+    return[r1 , r2]
+
+start = (0.2, 0.0)
+sol = root(sistema, start, method='hybr')
+print("soluzione con root:     ", *sol.x)
