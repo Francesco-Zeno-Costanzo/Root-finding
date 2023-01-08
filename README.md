@@ -59,7 +59,7 @@ The implementation of the method is shown in tri_sor.f
 ## Successive over-relaxation 
 Successive over-relaxation (SOR) is a variant of the Gauss–Seidel method:
 
-<img src="https://latex.codecogs.com/svg.image?x^{(k&plus;1)}_i&space;&space;=&space;(1-\omega)x^{(k)}_i&space;&plus;&space;\frac{\omega}{a_{ii}}&space;\left(b_i&space;-&space;\sum_{j<i}&space;a_{ij}x^{(k&plus;1)}_j&space;-&space;\sum_{j>i}&space;a_{ij}x^{(k)}_j&space;\right),\quad&space;i=1,2,\ldots,n" title="https://latex.codecogs.com/svg.image?\\x^{(k+1)}_i = (1-\omega)x^{(k)}_i + \frac{\omega}{a_{ii}} \left(b_i - \sum_{j<i} a_{ij}x^{(k+1)}_j - \sum_{j>i} a_{ij}x^{(k)}_j \right),\quad i=1,2,\ldots,n" />
+<img src="https://latex.codecogs.com/svg.image?x^{(k&plus;1)}_i&space;&space;=&space;(1-\omega)x^{(k)}_i&space;&plus;&space;\frac{\omega}{a_{ii}}&space;\left(b_i&space;-&space;\sum_{j<i}&space;a_{ij}x^{(k&plus;1)}_j&space;-&space;\sum_{j>i}&space;a_{ij}x^{(k)}_j&space;\right),\quad&space;i=1,2,\ldots,n&space;" title="https://latex.codecogs.com/svg.image?x^{(k+1)}_i = (1-\omega)x^{(k)}_i + \frac{\omega}{a_{ii}} \left(b_i - \sum_{j<i} a_{ij}x^{(k+1)}_j - \sum_{j>i} a_{ij}x^{(k)}_j \right),\quad i=1,2,\ldots,n " />
 
 if \omega=1 we get Gauss–Seidel
 
