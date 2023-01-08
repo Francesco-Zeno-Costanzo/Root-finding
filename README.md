@@ -64,3 +64,7 @@ Successive over-relaxation (SOR) is a variant of the Gauss–Seidel method:
 if \omega=1 we get Gauss–Seidel
 
 The implementation of the method is shown in tri_sor.f
+
+## Conjugate gradient
+
+POI LO SCRIVO
