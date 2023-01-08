@@ -66,7 +66,7 @@ def kaczmarz(A, b, tol=1e-6, dense_output=False):
 if __name__ == "__main__":
 
     #creo una matrice e un termine noto
-    N = 20
+    N = 5
     A = np.zeros((N, N))
     b = np.zeros(N)
     for i in range(N):

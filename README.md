@@ -38,7 +38,7 @@ Let Ax=b be a system of linear equations, let m be the number of rows of A, a_{i
 
 where i=k mod m and \overline{a_i} denotes complex conjugation a_{i}
 
-The implementation of the method is shown in sistemi_lineari.py, and there is also a comparison with the functions of numpy.
+The implementation of the method is shown in kaczmarz.py, and there is also a comparison with the functions of numpy.
 
 ## Tridiagonal matrix algorithm
 The tridiagonal matrix algorithm, is a simplified form of Gaussian elimination that can be used to solve tridiagonal systems of equations:
