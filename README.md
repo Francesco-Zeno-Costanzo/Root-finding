@@ -39,3 +39,28 @@ Let Ax=b be a system of linear equations, let m be the number of rows of A, a_{i
 where i=k mod m and \overline{a_i} denotes complex conjugation a_{i}
 
 The implementation of the method is shown in sistemi_lineari.py, and there is also a comparison with the functions of numpy.
+
+## Tridiagonal matrix algorithm
+The tridiagonal matrix algorithm, is a simplified form of Gaussian elimination that can be used to solve tridiagonal systems of equations:
+
+<img src="https://latex.codecogs.com/svg.image?\begin{bmatrix}&space;&space;&space;b_1&space;&&space;c_1&space;&&space;&space;&space;&space;&space;&space;&space;&space;&&space;&space;&space;&space;&space;&space;&space;&space;&&space;&space;0&space;&space;&space;&space;&space;&space;\\&space;&space;&space;a_2&space;&&space;b_2&space;&&space;c_2&space;&space;&space;&space;&&space;&space;&space;&space;&space;&space;&space;&space;&&space;&space;&space;&space;&space;&space;&space;&space;&space;\\&space;&space;&space;&space;&space;&space;&space;&&space;a_3&space;&&space;b_3&space;&space;&space;&space;&&space;\ddots&space;&&space;&space;&space;&space;&space;&space;&space;&space;&space;\\&space;&space;&space;&space;&space;&space;&space;&&space;&space;&space;&space;&space;&&space;\ddots&space;&&space;\ddots&space;&&space;c_{n-1}&space;\\&space;&space;&space;0&space;&space;&space;&&space;&space;&space;&space;&space;&&space;&space;&space;&space;&space;&space;&space;&space;&&space;a_n&space;&space;&space;&space;&&space;b_n\end{bmatrix}\begin{bmatrix}&space;&space;&space;x_1&space;&space;&space;&space;\\&space;&space;&space;x_2&space;&space;&space;&space;\\&space;&space;&space;x_3&space;&space;&space;&space;\\&space;&space;&space;\vdots&space;\\&space;&space;&space;x_n\end{bmatrix}=\begin{bmatrix}&space;&space;&space;d_1&space;&space;&space;&space;\\&space;&space;&space;d_2&space;&space;&space;&space;\\&space;&space;&space;d_3&space;&space;&space;&space;\\&space;&space;&space;\vdots&space;\\&space;&space;&space;d_n\end{bmatrix}" title="https://latex.codecogs.com/svg.image?\begin{bmatrix} b_1 & c_1 & & & 0 \\ a_2 & b_2 & c_2 & & \\ & a_3 & b_3 & \ddots & \\ & & \ddots & \ddots & c_{n-1} \\ 0 & & & a_n & b_n\end{bmatrix}\begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ \vdots \\ x_n\end{bmatrix}=\begin{bmatrix} d_1 \\ d_2 \\ d_3 \\ \vdots \\ d_n\end{bmatrix}" />
+
+For such systems, the solution can be obtained in O(n) operations instead of O(n^{3}) required by Gaussian elimination. 
+The steps are:
+
+<img src="https://latex.codecogs.com/svg.image?c'_i&space;=&space;\begin{cases}&space;&space;\cfrac{c_i}{b_i},&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&&space;i&space;=&space;1,&space;\\&space;&space;\cfrac{c_i}{b_i&space;-&space;a_i&space;c'_{i&space;-&space;1}},&space;&&space;i&space;=&space;2,&space;3,&space;\dots,&space;n&space;-&space;1&space;\end{cases}\hspace{10&space;mm}d'_i&space;=&space;\begin{cases}&space;&space;\cfrac{d_i}{b_i},&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&space;&&space;i&space;=&space;1,&space;\\&space;&space;\cfrac{d_i&space;-&space;a_i&space;d'_{i&space;-&space;1}}{b_i&space;-&space;a_i&space;c'_{i&space;-&space;1}},&space;&&space;i&space;=&space;2,&space;3,&space;\dots,&space;n.&space;\end{cases}" title="https://latex.codecogs.com/svg.image?c'_i = \begin{cases} \cfrac{c_i}{b_i}, & i = 1, \\ \cfrac{c_i}{b_i - a_i c'_{i - 1}}, & i = 2, 3, \dots, n - 1 \end{cases}\hspace{10 mm}d'_i = \begin{cases} \cfrac{d_i}{b_i}, & i = 1, \\ \cfrac{d_i - a_i d'_{i - 1}}{b_i - a_i c'_{i - 1}}, & i = 2, 3, \dots, n. \end{cases}" />
+
+The solution is then obtained by back substitution
+
+<img src="https://latex.codecogs.com/svg.image?\\x_n&space;=&space;d'_n\\x_i&space;=&space;d'_i&space;-&space;c'_i&space;x_{i&space;&plus;&space;1},&space;\quad&space;i&space;=&space;n&space;-&space;1,&space;n&space;-&space;2,&space;\ldots,&space;1" title="https://latex.codecogs.com/svg.image?\\x_n = d'_n\\x_i = d'_i - c'_i x_{i + 1}, \quad i = n - 1, n - 2, \ldots, 1" />
+
+The implementation of the method is shown in tri_sor.f
+
+## Successive over-relaxation 
+Successive over-relaxation (SOR) is a variant of the Gauss–Seidel method:
+
+<img src="https://latex.codecogs.com/svg.image?x^{(k&plus;1)}_i&space;&space;=&space;(1-\omega)x^{(k)}_i&space;&plus;&space;\frac{\omega}{a_{ii}}&space;\left(b_i&space;-&space;\sum_{j<i}&space;a_{ij}x^{(k&plus;1)}_j&space;-&space;\sum_{j>i}&space;a_{ij}x^{(k)}_j&space;\right),\quad&space;i=1,2,\ldots,n" title="https://latex.codecogs.com/svg.image?\\x^{(k+1)}_i = (1-\omega)x^{(k)}_i + \frac{\omega}{a_{ii}} \left(b_i - \sum_{j<i} a_{ij}x^{(k+1)}_j - \sum_{j>i} a_{ij}x^{(k)}_j \right),\quad i=1,2,\ldots,n" />
+
+if \omega=1 we get Gauss–Seidel
+
+The implementation of the method is shown in tri_sor.f
