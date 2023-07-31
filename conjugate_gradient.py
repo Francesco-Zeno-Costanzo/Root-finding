@@ -5,6 +5,7 @@ conjugate gradient method
 
 import time
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy.sparse.linalg import cg
 
 
