@@ -71,47 +71,50 @@ C========================================================================
 C soubroutine per la risoluzione di sistemi con matrici tridiagonali
 C========================================================================
 
-      subroutine tri(N, d_ii, d_sup, d_inf, b, x)
-      implicit real*8 (a-h,o-z)
-      real*8, dimension(N) :: d_ii, d_sup, d_inf, b, x
+      subroutine tri(N, diag, sup_diag, inf_diag, b, x)
+	implicit real*8 (a-h,o-z)
+	real*8, dimension(N) :: diag, sup_diag, inf_diag
+	real*8, dimension(N) :: d_ii, d_up, d_lo, b, x
 	
-      !d_ii è la diagonale della matrice
-      !d_sup è la diagonale superiore
-      !d_inf è la diagonale inferiore
+	! we write the information on these arrays
+	! so that the subroutine doesn't modify the old ones
+	d_ii = diag       !d_ii is the diagonal of the matrix
+	d_up = sup_diag   !d_up is the upper diagonal
+	d_lo = inf_diag   !d_lo is the lower diagonal
 	
-      !rendo la matrice una triangolare superiore
-      !d_inf viene quindi annulato
-      do i = 2, N
-          if(d_ii(i-1) == 0.0) then
-              print *,"nemmeno dio può dividere per zero"
+	! make the matrix an upper triangular by canceling d_lo
+	do i = 2, N
+	    if(d_ii(i-1) == 0.0) then
+              print *,"Division by zero, non invertible matrix"
               return
           endif
-          a = d_inf(i-1)/d_ii(i-1)
-          d_ii(i) = d_ii(i) - a*d_sup(i-1)
+          a = d_lo(i-1)/d_ii(i-1)
+          d_ii(i) = d_ii(i) - a*d_up(i-1)
           b(i) = b(i) - a*b(i-1)
-      enddo
+	enddo
 
-      !a questo punto è facile trovare x_n dato che
-      !nell'ultima riga della matrice è rimasto solo
-      !l'elemento sulla diagonale ad essere non nullo
-      if(d_ii(N) == 0.0) then
-          print *,"nemmeno dio può dividere per zero"
+	! at this point it is easy to find x_n given that
+	! in the last row of the matrix, there is only
+	! the element left on the diagonal which is non-zero
+	if(d_ii(N) == 0.0) then
+          print *,"Division by zero, non invertible matrix"
           return
       endif
+      
       x(N) = b(N)/d_ii(N)
       	
-      !e adesso andando a ritroso posso trovare tutti gli altri x_i
+      !and now going backwards I can find all the other x_i
       do i = N-1, 1, -1
-          b(i) = b(i) - d_sup(i)*x(i+1)
+          b(i) = b(i) - d_up(i)*x(i+1)
           if(d_ii(i) == 0.0) then
-              print *,"nemmeno dio può dividere per zero"
+              print *,"Division by zero, non invertible matrix"
               return
           endif
           x(i) = b(i)/d_ii(i)
       enddo
 
-      return
-      end
+	return
+	end
 
 
 C========================================================================
