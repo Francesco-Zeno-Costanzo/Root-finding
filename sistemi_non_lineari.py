@@ -52,6 +52,7 @@ while (abs(f1.subs(x, x0).subs(y, y0))>tau and abs(f2.subs(x, x0).subs(y, y0)) >
     ys = np.insert(ys, len(ys), y0)
 
     iter += 1
+    if iter>1000: break
 
 print(f"soluzione con NR : x_0 = {xs[-1]} {ys[-1]}")
 print(f"raggiunti in {iter} iterazioni")
